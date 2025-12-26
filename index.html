@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amerrcoffee - بُن عامر</title>
+    <link rel="icon" tybe="image/png"href="logo.png">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
+    
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ستايل إضافي لقسم طلباتي لضمان المظهر الجيد */
+        .order-card-client {
+            border: 1px solid #eee;
+            transition: transform 0.2s;
+        }
+        .order-card-client:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1) !important;
+        }
+        .support-btn-container {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        .support-link {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            padding: 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 13px;
+            color: white;
+        }
+        .whatsapp-support { background-color: #25D366; }
+        .phone-support { background-color: #5A3F33; }
+    </style>
+    <script src="products-data.js"></script>
+
+<script src="script.js"></script>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <button id="sidebar-toggle" class="icon-btn" aria-label="القائمة" onclick="openSidebar()">
+                <i class="material-icons">menu</i>
+            </button>
+            <h1 class="logo-title">Amerrcoffee - بُن عامر</h1>
+            <button id="cart-toggle" class="icon-btn cart-icon" aria-label="السلة" onclick="openCartSidebar()">
+                <i class="material-icons">shopping_cart</i>
+                <span id="cart-count" class="cart-count">0</span>
+            </button>
+        </div>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="ابحث في المتجر، المنتجات أو الأقسام...">
+            <button id="global-search-btn" class="search-btn icon-btn">
+                <i class="material-icons">search</i>
+            </button>
+        </div>
+    </header>
+    
+    <nav id="side-drawer" class="side-drawer">
+        <div class="drawer-header">
+            <h3>قائمة التنقل</h3>
+            <button onclick="closeSidebar()" class="icon-btn close-btn"><i class="material-icons">close</i></button>
+        </div>
+        <div class="drawer-content">
+            <ul>
+                <li><button id="nav-login-btn" onclick="navigate('login-page')"><i class="material-icons">account_circle</i> تسجيل الدخول</button></li>
+                <li><button data-page="home" onclick="navigate('home')"><i class="material-icons">home</i> الرئيسية</button></li>
+                <li><button data-page="my-orders" onclick="navigate('my-orders')"><i class="material-icons">assignment</i> طلباتي</button></li> <li><button data-page="store" onclick="navigate('store')"><i class="material-icons">store</i> المتجر</button></li>
+                <li><button data-page="menu-page" onclick="navigate('menu-page')"><i class="material-icons">photo_library</i> المنيو</button></li>
+                <li><button data-page="who-are-we" onclick="navigate('who-are-we')"><i class="material-icons">info</i> من نحن؟</button></li>
+                <li><button data-page="contact" onclick="navigate('contact')"><i class="material-icons">call</i> اتصل بنا</button></li>
+            </ul>
+        </div>
+        <div class="contact-info">
+            <p>للتواصل:</p>
+            <p>+201029352797</p> 
+            <p>Amerrcoffee1@gmail.com</p>
+        </div>
+        <div class="social-links">
+            <a href="https://www.instagram.com/amerrcoffee?igsh=aHRlaWVrcmI5MjAz" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/share/19Mq73bMKT/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        </div>
+    </nav>
+    
+    <aside id="cart-sidebar" class="side-drawer cart-sidebar">
+        <div class="drawer-header">
+            <h3>سلة التسوق</h3>
+            <button onclick="closeCartSidebar()" class="icon-btn close-btn"><i class="material-icons">close</i></button>
+        </div>
+        <div id="cart-items" class="cart-items-container">
+            </div>
+        <div class="cart-footer">
+            <div class="cart-total-line">
+                <strong>الإجمالي:</strong>
+                <span id="cart-total">0.00 ج</span>
+            </div>
+            <button onclick="navigate('checkout')" class="checkout-btn">إتمام الطلب والدفع</button>
+        </div>
+    </aside>
+
+    <main>
+
+        <section id="my-orders" class="page-section" style="display: none;">
+            <h2 class="section-title">طلباتي السابقة</h2>
+            <div id="my-orders-list" style="padding: 10px;">
+                </div>
+            <div style="padding: 20px; background: #fff8f0; margin: 15px; border-radius: 12px; border: 1px dashed #C78C4E; text-align: center;">
+                <p style="margin-bottom: 10px; font-weight: bold; color: #5A3F33;">لمتابعة أوردر حالي مع المساعد:</p>
+                <div class="support-btn-container">
+                    <a href="https://wa.me/201029352797" class="support-link whatsapp-support" target="_blank">
+                        <i class="fab fa-whatsapp"></i> واتساب
+                    </a>
+                    <a href="tel:+201029352797" class="support-link phone-support">
+                        <i class="material-icons" style="font-size: 18px;">call</i> اتصال
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="signup-page" class="page-section" style="display: none;">
+    <div class="coffee-form-container">
+        <h1>إنشاء حساب جديد</h1>
+        <form id="signup-form">
+            <div class="field-container">
+                <label for="reg-name">الاسم الكامل</label>
+                <div class="input-group">
+                    <input type="text" id="reg-name" placeholder="أدخل اسمك الكامل" required />
+                </div>
+            </div>
+
+            <div class="field-container">
+                <label for="reg-phone">رقم الهاتف</label>
+                <div class="input-group">
+                    <input type="number" id="reg-phone" placeholder="0112145...." required />
+                </div>
+            </div>
+
+            <div class="field-container">
+                <label for="reg-email">البريد الإلكتروني</label>
+                <div class="input-group">
+                    <input type="email" id="reg-email" placeholder="example@gmail.com" required />
+                </div>
+            </div>
+
+            <div class="field-container">
+                <label for="reg-age">العمر</label>
+                <div class="input-group">
+                    <input type="number" id="reg-age" placeholder="مثال: 25" required />
+                </div>
+            </div>
+
+            <div class="field-container">
+                <label for="reg-nationality">الدولة / الجنسية</label>
+                <div class="input-group">
+                    <select id="reg-nationality" name="countries" class="coffee-select">
+                        <option value="eg">🇪🇬 مصر (Egypt)</option>
+                        <option value="sa">🇸🇦 السعودية (KSA)</option>
+                        <option value="ae">🇦🇪 الإمارات (UAE)</option>
+                        <option value="jo">🇯🇴 الأردن (Jordan)</option>
+                        <option value="ma">🇲🇦 المغرب (Morocco)</option>
+                        <option value="kw">🇰🇼 الكويت (Kuwait)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field-container">
+                <label for="reg-password">كلمة المرور</label>
+                <div class="input-group">
+                    <input type="password" id="reg-password" placeholder="أدخل كلمة مرور قوية" required />
+                </div>
+            </div>
+
+            <button type="submit" class="coffee-submit-btn">إنشاء الحساب الآن</button>
+        </form>
+        <p style="text-align:center; margin-top:15px;">لديك حساب بالفعل؟ <a href="#" onclick="navigate('login-page')">تسجيل الدخول</a></p>
+    </div>
+</section>
+
+<section id="login-page" class="page-section" style="display: none;">
+    <div class="coffee-form-container">
+        <h1>تسجيل الدخول</h1>
+        <form id="login-form">
+            <div class="field-container">
+                <label for="login-email">البريد الإلكتروني</label>
+                <div class="input-group">
+                    <input type="email" id="login-email" placeholder="أدخل بريدك الإلكتروني" required />
+                </div>
+            </div>
+            <div class="field-container">
+                <label for="login-password">كلمة المرور</label>
+                <div class="input-group">
+                    <input type="password" id="login-password" placeholder="أدخل كلمة المرور" required />
+                </div>
+            </div>
+            <button type="submit" class="coffee-submit-btn">دخول</button>
+        </form>
+        <p style="text-align:center; margin-top:15px;">ليس لديك حساب؟ <a href="#" onclick="navigate('signup-page')">إنشاء حساب جديد</a></p>
+    </div>
+</section>
+
+        
+        <section id="home" class="page-section">
+            <h2 class="section-title">مرحباً بك في عالم بُن عامر</h2>
+            <div class="image-banner">
+                <img src="logo.png" alt="Amerrcoffee Welcome Image"> 
+            </div>
+            <h3 style="text-align: center; margin-top: 30px; color: var(--color-accent);">أفضل أنواع البن الطازج بين يديك.</h3>
+            <button onclick="navigate('store')" class="checkout-btn" style="width: fit-content; margin: 20px auto; display: block;">ابدأ التسوق</button>
+        
+            <div class="contact-footer-content">
+                <div class="contact-details">
+                    <p><i class="material-icons">email</i> Amerrcoffee1@gmail.com</p>
+                    <p><i class="material-icons">phone</i> +201029352797 WhatsApp </p>
+                </div>
+                <div class="social-icons-footer">
+                     <a href="https://www.instagram.com/amerrcoffee?igsh=aHRlaWVrcmI5MjAz" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                     <a href="https://www.facebook.com/share/19Mq73bMKT/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <p class="copyright">Amerrcoffee - بُن عامر، جميع الحقوق محفوظة © 2025.</p>
+            </div>
+        </section>
+
+        <section id="store" class="page-section" style="display: none;">
+            <h2 class="section-title"> متجر بُن عامر</h2>
+            <div id="store-content">
+                <p style="text-align: center; color: #777;">جاري تحميل المنتجات...</p>
+            </div>
+        </section>
+        
+        <section id="menu-page" class="page-section" style="display: none;">
+            <h2 class="section-title"> قائمة المنيو</h2>
+            <div class="menu-gallery">
+                <img src="menu.jpg" alt="قائمة المنيو" class="menu-image" loading="lazy">
+                <p style="text-align: center; color: var(--color-text-light);">جميع الأسعار والتفاصيل موجودة في قسم المتجر.</p>
+            </div>
+        </section>
+
+        <section id="who-are-we" class="page-section" style="display: none;">
+            <h2 class="section-title">من نحن؟</h2>
+            <div class="text-content">
+                <img src="pr7.jpg" alt="Amerrcoffee Team" class="who-are-we-image">
+                <p><strong>بُن عامر</strong> هي وجهتك الأولى لعشاق القهوة في مصر. نحن نؤمن بأن فنجان القهوة المثالي يبدأ من البذور عالية الجودة وعملية التحميص الدقيقة. نختار أفضل أنواع حبوب البن ونقوم بتحميصها وتجهيزها بمهارة لنقدم لك الطعم الطازج والنكهة الغنية التي تستحقها.</p>
+                <p>مهمتنا هي توفير تجربة قهوة استثنائية من المزرعة إلى الفنجان، مع الالتزام بالجودة والشفافية في كل خطوة.</p>
+            </div>
+        </section>
+        
+        <section id="contact" class="page-section" style="display: none;">
+            <h2 class="section-title"> اتصل بنا</h2>
+            <div class="contact-details-page">
+                <p>الفروع : </p>
+                <i class="material-icons">place</i> <ul>
+                    <li>الفرع الرئيسي : ٥ شارع اسكندرية ميدان الجامع مصر الجديده</li>
+                    <li>
+                        الفرع الثاني : شارع جمال عبد الناصر جسر السويس 
+                    </li>
+                    <li>
+                        الفرع الثالث: تحت كوبري اول عباس مدينة نصر 
+                    </li>
+                    <li>
+                        الفرع الرابع: مدينة العبور مدخل الحي السادس 
+                    </li>
+                </ul>
+                <p><i class="material-icons">phone</i> رقم الهاتف (واتساب): +201029352797</p>
+                <p><i class="material-icons">email</i> البريد الإلكتروني: Amerrcoffee1@gmail.com</p>
+                
+                <h3 style="margin-top: 30px;">تابعنا على وسائل التواصل الاجتماعي</h3>
+                <div class="social-icons-contact">
+                    <a href="https://www.instagram.com/amerrcoffee?igsh=aHRlaWVrcmI5MjAz" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i> Amerrcoffee</a>
+                    <a href="https://www.facebook.com/share/19Mq73bMKT/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i> Amerrcoffee</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="checkout" class="page-section" style="display: none;">
+            <h2 class="section-title"> إتمام الطلب</h2>
+            
+            <div class="checkout-summary">
+                <h3>ملخص الطلب</h3>
+                <div id="checkout-items-summary"></div>
+                <div class="cart-total-line" style="border-top: 1px solid #ccc; padding-top: 10px; margin-top: 10px;">
+                    <strong>الإجمالي الكلي:</strong>
+                    <span id="checkout-total">0.00 ج</span>
+                </div>
+            </div>
+            
+            <form id="checkout-form" class="checkout-form">
+                <h3>بيانات الشحن والتواصل</h3>
+                <div class="input-group">
+                    <label for="customer-name">الاسم كاملاً:</label>
+                    <input type="text" id="customer-name" name="customer-name" required>
+                </div>
+                <div class="input-group">
+                    <label for="customer-phone">رقم الهاتف:</label>
+                    <input type="tel" id="customer-phone" name="customer-phone" required>
+                </div>
+                <div class="input-group">
+                    <label for="customer-address">العنوان بالتفصيل (المدينة، الحي، الشارع):</label>
+                    <textarea id="customer-address" name="customer-address" required placeholder="أدخل عنوانك بالتفصيل لضمان وصول الطلب..."></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="customer-email">البريد الإلكتروني:</label>
+                    <input type="email" id="customer-email" name="customer-email" required>
+                </div>
+                
+                <h3>طريقة الدفع</h3>
+                <div class="payment-options">
+                    <label class="payment-card">
+                        <input type="radio" name="payment-method" value="الدفع عند الاستلام" checked>
+                        <span class="card-content">
+                            <i class="material-icons">payments</i>
+                            الدفع عند الاستلام
+                        </span>
+                    </label>
+                    <label class="payment-card">
+                        <input type="radio" name="payment-method" value="فودافون كاش">
+                        <span class="card-content">
+                            <i class="material-icons">phone_iphone</i>
+                            فودافون كاش
+                        </span>
+                    </label>
+                    <label class="payment-card">
+                        <input type="radio" name="payment-method" value="حساب بنكي">
+                        <span class="card-content">
+                            <i class="material-icons">account_balance</i>
+                            تحويل بنكي
+                        </span>
+                    </label>
+                </div>
+
+                <button type="submit" class="checkout-btn submit-order-btn">
+                    تأكيد الاوردر  
+                </button>
+                <p class="note">بمجرد الضغط، سيتم إرسال طلبك مباشرة لسيرفر "بُن عامر" للتنفيذ.</p>
+            </form>
+        </section>
+        
+    </main>
+
+    <nav class="footer-nav">
+        <button data-page="home" onclick="navigate('home')" class="active"><i class="material-icons">home</i> الرئيسية</button>
+        <button data-page="contact" onclick="navigate('contact')"><i class="material-icons">call</i> اتصل بنا</button>
+        <button data-page="store" onclick="navigate('store')"><i class="material-icons">store</i> المتجر</button>
+        <button data-page="menu-page" onclick="navigate('menu-page')"><i class="material-icons">photo_library</i> المنيو</button>
+        <button data-page="checkout" onclick="navigate('checkout')"><i class="material-icons">payment</i> الدفع</button>
+    </nav>
+    
+    <div id="toast-notification" class="toast-notification"></div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
